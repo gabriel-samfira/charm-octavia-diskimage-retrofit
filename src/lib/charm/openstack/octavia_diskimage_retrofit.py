@@ -247,6 +247,9 @@ class OctaviaDiskimageRetrofitCharm(charms_openstack.charm.OpenStackCharm):
         if self.config['ubuntu-mirror']:
             cmd.append('-m')
             cmd.append(self.config['ubuntu-mirror'])
+        if self.config['image-format']:
+            cmd.append('-O')
+            cmd.append(self.config['image-format'])
         if self.config['uca-mirror']:
             uca_mirror = self.config['uca-mirror']
             if '|' in uca_mirror:
@@ -297,8 +300,9 @@ class OctaviaDiskimageRetrofitCharm(charms_openstack.charm.OpenStackCharm):
                                source_image.version_name):
             # build a informative image name
             dest_name += '-' + str(image_property)
+        img_format = self.config['image-format'] or "qcow2"
         dest_image = glance.images.create(container_format='bare',
-                                          disk_format='qcow2',
+                                          disk_format=img_format,
                                           name=dest_name)
         ch_core.hookenv.status_set('maintenance',
                                    'Uploading {}'

@@ -69,6 +69,12 @@ options:
       .
       If True, cron job to automatically retrofit images according to the
       ``frequency`` param, will be set on the leader unit.
+  image-format:
+    type: string
+    default: qcow2
+    description: |
+      Disk image format that will be uploaded to Glance. When using ceph, it is recommended
+      to set this option to raw.
   frequency:
     type: string
     default: "daily"
